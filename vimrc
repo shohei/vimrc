@@ -1,5 +1,6 @@
 set nocompatible
 set whichwrap=b,s,h,l,<,>,[,]
+let $LANG = "en"
 let &t_Co=256
 syntax on
 set number
@@ -297,7 +298,6 @@ function! UnMinify()
     normal ggVG=
 endfunction
 
-"NeoBundle 'Shougo/neocomplete'
 "NeoBundle 'Shougo/neosnippet'
 "NeoBundle 'Shougo/neosnippet-snippets'
 
@@ -335,5 +335,34 @@ endif
 
 set backupskip=/tmp/*,/private/tmp/*
 
+set spelllang=en,cjk
 
 
+" NeocompleteとNeosnippetsがコンフリクトしてるようなので
+" Neocompleteは消しとく
+" " if_luaが有効ならneocompleteを使う
+" NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
+" if neobundle#is_installed('neocomplete')
+"     " neocomplete用設定
+"     let g:neocomplete#enable_at_startup = 1
+"     let g:neocomplete#enable_ignore_case = 1
+"     let g:neocomplete#enable_smart_case = 1
+"     if !exists('g:neocomplete#keyword_patterns')
+"         let g:neocomplete#keyword_patterns = {}
+"     endif
+"     let g:neocomplete#keyword_patterns._ = '\h\w*'
+" elseif neobundle#is_installed('neocomplcache')
+"     " neocomplcache用設定
+"     let g:neocomplcache_enable_at_startup = 1
+"     let g:neocomplcache_enable_ignore_case = 1
+"     let g:neocomplcache_enable_smart_case = 1
+"     if !exists('g:neocomplcache_keyword_patterns')
+"         let g:neocomplcache_keyword_patterns = {}
+"     endif
+"     let g:neocomplcache_keyword_patterns._ = '\h\w*'
+"     let g:neocomplcache_enable_camel_case_completion = 1
+"     let g:neocomplcache_enable_underbar_completion = 1
+" endif
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+"
