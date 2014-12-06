@@ -7,7 +7,7 @@ set number
 set laststatus=2
 set ignorecase
 set cindent
-colorscheme railscasts 
+" colorscheme railscasts 
 syntax enable
 hi Normal ctermfg=none ctermbg=none
 set hlsearch
@@ -29,46 +29,48 @@ nnoremap a :a!<kEnter>
 "vnoremap t :MakeMultilineTableFromGridTable<kEnter>
 "command GenerateTable s/[|+]/ /g
 
-execute pathogen#infect()
-" * evervim {{{
-	nnoremap <silent> ,el :<C-u>EvervimNotebookList<CR>
-	nnoremap <silent> ,eT :<C-u>EvervimListTags<CR>
-	nnoremap <silent> ,en :<C-u>EvervimCreateNote<CR>
-	nnoremap <silent> ,eb :<C-u>EvervimOpenBrowser<CR>
-	nnoremap <silent> ,ec :<C-u>EvervimOpenClient<CR>
-	nnoremap ,es :<C-u>EvervimSearchByQuery<SPACE>
-	nnoremap <silent> ,et :<C-u>EvervimSearchByQuery<SPACE>tag:todo -tag:done -tag:someday<CR>
-	nnoremap <silent> ,eta :<C-u>EvervimSearchByQuery<SPACE>tag:todo -tag:done<CR>
-	let g:evervim_splitoption=''
-" ------------------------ }}}
 
-if has('vim_starting')
+ " Note: Skip initialization for vim-tiny or vim-small.
+ if !1 | finish | endif
+
+ if has('vim_starting')
+   set nocompatible               " Be iMproved
+
+   " Required:
    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+ endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
-filetype plugin indent on     
-" Required!
+ " Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
 
-" Installation check.
-if neobundle#exists_not_installed_bundles()
-  echomsg 'Not installed bundles : ' .
-        \ string(neobundle#get_not_installed_bundle_names())
-  echomsg 'Please execute ":NeoBundleInstall" command.'
-"finish
-endif
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
 
+ " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
+ " Note: You don't set neobundle setting in .gvimrc!
+
+ call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
+
+colorscheme desert
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
+" NeoBundle 'Shougo/vimproc.vim', {
+" \ 'build' : {
+" \     'windows' : 'tools\\update-dll-mingw',
+" \     'cygwin' : 'make -f make_cygwin.mak',
+" \     'mac' : 'make -f make_mac.mak',
+" \     'linux' : 'make',
+" \     'unix' : 'gmake',
+" \    },
+" \ }
 NeoBundle 'VimClojure'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite.vim'
@@ -204,6 +206,7 @@ NeoBundle 'jeffreyiacono/vim-colors-wombat'
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
 NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+NeoBundle 'ujihisa/unite-colorscheme'
 ""
 "" Vim-LaTeX
 ""
@@ -335,7 +338,7 @@ endif
 
 set backupskip=/tmp/*,/private/tmp/*
 
-set spelllang=en,cjk
+" set spelllang=en,cjk
 
 
 " NeocompleteとNeosnippetsがコンフリクトしてるようなので
