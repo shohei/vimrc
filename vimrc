@@ -13,6 +13,7 @@ hi Normal ctermfg=none ctermbg=none
 set hlsearch
 set autoindent
 set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+set lazyredraw
 set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 "set tabstop=1 expandtab shiftwidth=1 softtabstop=1
 "source ~/.vim/plugin/matchit.vim
@@ -24,7 +25,7 @@ nnoremap <C-p> gT
 "imap <C-j> <esc>
 inoremap <C-j> <esc>
 nnoremap <silent> <C-s> :s
-nnoremap ; :
+"nnoremap ; : "wanna use ; for forwarding 
 nnoremap a :a!<kEnter>
 "vnoremap t :MakeMultilineTableFromGridTable<kEnter>
 "command GenerateTable s/[|+]/ /g
@@ -72,7 +73,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'VimClojure'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplcache'
+" NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 " Plugin key-mappings.  " <C-k>でsnippetの展開
@@ -103,6 +104,7 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'Lokaltog/powerline-fontpatcher'
 let g:Powerline_symbols = 'fancy'
 
+NeoBundle 'mattn/benchvimrc-vim'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-endwise'
@@ -116,6 +118,7 @@ vnoremap m :s/+-/ /g \| '<,'>:s/\|//g \| '<,'>:s/^.//g <kEnter>
 command MakeMultilineTableFromGridTable :'<,'>s/[|+]/ /g
 
 NeoBundle 'supermomonga/shaberu.vim'
+NeoBundle 'derekwyatt/vim-scala'
 
 NeoBundle 'tpope/vim-markdown'
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -334,13 +337,20 @@ if has('syntax')
 endif
 
 set backupskip=/tmp/*,/private/tmp/*
+if has('lua') 
+    set spelllang=en,cjk 
+endif
 
-set spelllang=en,cjk
-
+" vimdiffの色設定
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=22
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=52
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=21
+"
 
 " NeocompleteとNeosnippetsがコンフリクトしてるようなので
 " Neocompleteは消しとく
-" " if_luaが有効ならneocompleteを使う
+" if_luaが有効ならneocompleteを使う
 " NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
 " if neobundle#is_installed('neocomplete')
 "     " neocomplete用設定
@@ -366,3 +376,19 @@ set spelllang=en,cjk
 " inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 "
+"
+" syntax match luaTodo /^.*WIP.*$/ contained
+" highlight texTodo ctermbg=Yellow ctermfg=Red
+" syn match texTodo   contained   "\<\(TODO\|FIXME\):"
+" hi def link texTodo Todo
+"syntax on
+" highlight texTodo ctermbg=Yellow ctermfg=Red
+" syn match texTodo   contained   "\<\(TODO\|FIXME\):"
+" hi def link texTodo Todo
+
+" for drcs file type detect, not working...
+" Vimであいまいな幅の文字の論理幅を1にします
+" set ambiwidth=single
+" " RLoginであいまいな幅の文字の論理幅を1にします。
+" call writefile(["\e[?8428h"], '/dev/tty')
+
